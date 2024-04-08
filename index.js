@@ -74,6 +74,7 @@ function drawShip(shipPositionX) {
 }
 
 function draw() {
+  clear();
   for (let i = 0; i < MAX_ROWS; i++) {
     let row = document.createElement("div");
     row.className = "row";
@@ -97,22 +98,16 @@ document.addEventListener("keydown", function (event) {
   console.log("key", key);
 
   if (key === "ArrowRight") {
-    if (gameArea - getCurrentFigure()[0].length) {
-      if (canPutFigure(areaState, getCurrentFigure(), x, y + 1)) {
-        y = y + 1;
-
-        redraw();
-      }
+    if (state.shipPositionX < MAX_COLS - SHIP_WIDTH) {
+      state.shipPositionX = state.shipPositionX + 1;
+      draw();
     }
   }
 
   if (key === "ArrowLeft") {
-    if (y > 0) {
-      if (canPutFigure(areaState, getCurrentFigure(), x, y - 1)) {
-        y = y - 1;
-
-        redraw();
-      }
+    if (state.shipPositionX > 0) {
+      state.shipPositionX = state.shipPositionX - 1;
+      draw();
     }
   }
 });
