@@ -52,10 +52,12 @@ function draw(array) {
 
 const MAX_ROWS = 30;
 const MAX_COLS = 20;
-const SHIP_WIDTH = 2;
+const SHIP_WIDTH = 5;
 
 const state = {
   shipPositionX: 3,
+  bulletPositions: [],
+  targets: [],
 };
 
 const gameArea = document.getElementById("game_area");
@@ -73,6 +75,18 @@ function drawShip(shipPositionX) {
   }
 }
 
+function drawBullets(bulletPositions) {
+  // for (const bulletPosition of bulletPositions) {
+  //   const targetRow = gameArea.childNodes[target.row];
+  //   targetRow.childNodes[target.col].classList.add("target");
+  // }
+  for (let i = 0; i < bulletPositions.length; i++) {
+    const bulletPosition = bulletPositions[i]; // { row: ..., col: ... }
+    const rowElement = gameArea.childNodes[bulletPosition.row];
+    rowElement.childNodes[bulletPosition.col].classList.add("bullet");
+  }
+}
+
 function draw() {
   clear();
   for (let i = 0; i < MAX_ROWS; i++) {
@@ -83,31 +97,72 @@ function draw() {
       let col = document.createElement("div");
       col.className = "col";
       row.appendChild(col);
-      // if (array[i][j] !== 0) {
-      //     col.style.backgroundColor = colors[array[i][j] - 1];
-      // }
     }
   }
   drawShip(state.shipPositionX);
+  drawBullets(state.bulletPositions);
+}
+
+function moveTargets() {
+  for (let i = 0; i < state.targets.length; i++) {
+    state.targets[i].row += 1;
+    if (state.targets[i].row >= MAX_ROWS) {
+      state.targets.splice(i, 1);
+      i;
+    }
+  }
+}
+
+function spawnTarget() {
+  const newTarget = {
+    row: 0,
+    col: Math.floor(Math.random() * MAX_COLS),
+  };
+  state.targets.push(newTarget);
 }
 
 draw();
 
 document.addEventListener("keydown", function (event) {
   const key = event.key;
-  console.log("key", key);
 
   if (key === "ArrowRight") {
     if (state.shipPositionX < MAX_COLS - SHIP_WIDTH) {
-      state.shipPositionX = state.shipPositionX + 1;
+      state.shipPositionX++;
       draw();
     }
   }
 
   if (key === "ArrowLeft") {
     if (state.shipPositionX > 0) {
-      state.shipPositionX = state.shipPositionX - 1;
+      state.shipPositionX--;
       draw();
     }
   }
+
+  if (key === " ") {
+    state.bulletPositions.push({
+      row: MAX_ROWS - 2, // Just above the ship
+      col: state.shipPositionX + Math.floor(SHIP_WIDTH / 2), // Center of the ship
+    });
+    draw();
+  }
 });
+
+setInterval(function () {
+  console.log('total bullets', state.bulletPositions.length);
+
+  for (let i = 0; i < state.bulletPositions.length; i++) {
+    const bulletPosition = state.bulletPositions[i];
+    bulletPosition.row = bulletPosition.row - 1;
+  }
+
+  state.bulletPositions = state.bulletPositions.filter(function (item) {
+    if (item.row < 0) {
+      return false;
+    }
+    return true;
+  });
+
+  draw();
+}, 300);
