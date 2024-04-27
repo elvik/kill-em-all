@@ -101,6 +101,7 @@ function draw() {
   }
   drawShip(state.shipPositionX);
   drawBullets(state.bulletPositions);
+  drawTarget();
 }
 
 function moveTargets() {
@@ -114,14 +115,25 @@ function moveTargets() {
 }
 
 function spawnTarget() {
+
   const newTarget = {
     row: 0,
     col: Math.floor(Math.random() * MAX_COLS),
   };
   state.targets.push(newTarget);
 }
+spawnTarget ();
 
-draw();
+function drawTarget() {
+for (let i = 0; i < state.targets.length; i++) {
+  const targetPosition = state.targets[i]; // { row: ..., col: ... }
+  const rowElement = gameArea.childNodes[targetPosition.row];
+  rowElement.childNodes[targetPosition.col].classList.add("target");
+};
+}
+console.log(state.targets);
+
+
 
 document.addEventListener("keydown", function (event) {
   const key = event.key;
@@ -156,6 +168,13 @@ setInterval(function () {
     const bulletPosition = state.bulletPositions[i];
     bulletPosition.row = bulletPosition.row - 1;
   }
+
+  for (let i = 0; i < state.targets.length; i++) {
+    const target = state.targets[i];
+    target.row = target.row + 1;
+  }
+
+
 
   state.bulletPositions = state.bulletPositions.filter(function (item) {
     if (item.row < 0) {
