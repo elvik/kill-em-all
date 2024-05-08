@@ -118,18 +118,48 @@ function spawnTarget() {
 
   const newTarget = {
     row: 0,
-    col: Math.floor(Math.random() * MAX_COLS),
+    col: Math.floor(2 + Math.random() * (MAX_COLS - 4)),
   };
   state.targets.push(newTarget);
 }
-spawnTarget ();
+
+function handleSpawning() {
+  const spawnProbability = 50;
+  const randomNumber = (Math.random() * 100);
+
+  if (randomNumber < spawnProbability) {
+    spawnTarget();
+  }
+}
+
+function handleCollisions() {
+  for (let i = 0; i < state.bulletPositions.length; i++) {
+    const bulletPosition = state.bulletPositions[i];
+    for (let k = 0; k < state.targets.length; k++) {
+      const targetPosition = state.targets[k];
+
+      if (bulletPosition.row == targetPosition.row && bulletPosition.col == targetPosition.col) {
+        removeFromList(state.bulletPositions, bulletPosition);
+        removeFromList(state.targets, targetPosition);
+      }
+    }
+  }
+}
+
+function removeFromList(list, item) {
+  const index = list.indexOf(item);
+  if (index > -1) {
+    list.splice(index, 1);
+  }
+}
+
 
 function drawTarget() {
-for (let i = 0; i < state.targets.length; i++) {
-  const targetPosition = state.targets[i]; // { row: ..., col: ... }
-  const rowElement = gameArea.childNodes[targetPosition.row];
-  rowElement.childNodes[targetPosition.col].classList.add("target");
-};
+  for (let i = 0; i < state.targets.length; i++) {
+    const targetPosition = state.targets[i]; // { row: ..., col: ... }
+    const rowElement = gameArea.childNodes[targetPosition.row];
+    rowElement.childNodes[targetPosition.col].classList.add("target");
+  };
 }
 console.log(state.targets);
 
@@ -168,12 +198,14 @@ setInterval(function () {
     const bulletPosition = state.bulletPositions[i];
     bulletPosition.row = bulletPosition.row - 1;
   }
+  handleCollisions();
 
   for (let i = 0; i < state.targets.length; i++) {
     const target = state.targets[i];
     target.row = target.row + 1;
   }
-
+  handleSpawning();
+  handleCollisions();
 
 
   state.bulletPositions = state.bulletPositions.filter(function (item) {
