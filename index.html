@@ -12,8 +12,8 @@
         .col {
             background-color: rgb(27, 33, 67);
             margin: 2px;
-            width: 10px;
-            height: 10px;
+            width: 2vh;
+            height: 2vh;
         }
 
         .ship {
@@ -27,17 +27,24 @@
         .target {
             background-color: rgb(111, 26, 26) !important;
         }
-
         body {
-            margin: 0;
+            background-color: black;
+            margin: 0;display: flex;
+            justify-content: center;  /* Center horizontally /
+            align-items: center;      / Center vertically */
+            height: 1000vh;
+        }
+        h1 {
+            color: white;
         }
     </style>
 </head>
 
 <body>
-    <div id="game_area"></div>
+    <div>
+        <h1 id="score">Score: 0</h1>
+        <div id="game_area"></div></div>
     <script type="text/javascript" src="index.js"></script>
-    It works again!
 </body>
 
 </html>
