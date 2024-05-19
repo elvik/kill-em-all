@@ -2,7 +2,7 @@ const sound = new Audio("c://Users//olga//Downloads//Womp Womp Womp sound effect
 const MAX_ROWS = 30;
 const MAX_COLS = 20;
 const SHIP_WIDTH = 5;
-document.body.style.overflow = 'hidden'; //vypina skrolovani
+document.body.style.overflow = 'hidden'; 
 
 let score = 0;
 const state = {
@@ -22,15 +22,14 @@ const SHIP = [[" "," ","x"," "," "],
 
 const gameArea = document.getElementById("game_area");
 
-// vymaze vsechny html prvky z game area 
+
 function clear() { 
   while (gameArea.firstChild) {
     gameArea.firstChild.remove(); 
   }
 }
 
-// kresli lod, projedu vsechny patra na vejsku, pro kazdou z
-// radek projedu vsechny prvky co v tom jsou a podle toho jaky je x nakreslim bud bily v pripade ze je tam x
+
 function drawShip(shipPositionX) {
   for(let i = 0; i < SHIP.length; i++){
     const currentRow = gameArea.childNodes[MAX_ROWS - 1 - i];
@@ -39,7 +38,7 @@ function drawShip(shipPositionX) {
     }
   }
 }
-//kresleni kulek
+
 function drawBullets(bulletPositions) {
 
   for (let i = 0; i < bulletPositions.length; i++) {
@@ -49,7 +48,7 @@ function drawBullets(bulletPositions) {
   }
 }
 
-// vycisti obrazovku pomoci clear a pak postavi znovu od zacatku
+
 function draw() {
   clear();
   for (let i = 0; i < MAX_ROWS; i++) {
