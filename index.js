@@ -1,4 +1,4 @@
-const sound = new Audio("c://Users//olga//Downloads//Womp Womp Womp sound effect.mp3"); 
+const sound = new Audio("/home/elvik/Downloads/Womp Womp Womp sound effect.mp3"); 
 const MAX_ROWS = 30;
 const MAX_COLS = 20;
 const SHIP_WIDTH = 5;
