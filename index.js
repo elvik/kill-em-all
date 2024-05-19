@@ -1,18 +1,13 @@
-<<<<<<< HEAD
-const sound = new Audio(
-  "c://Users//olga//Downloads//Womp Womp Womp sound effect.mp3"
-);
+let audioElement = null;
+
+document.addEventListener("DOMContentLoaded", (event) => {
+  audioElement = document.getElementById("audioElement");
+});
+
 const MAX_ROWS = 30;
 const MAX_COLS = 20;
 const SHIP_WIDTH = 5;
 document.body.style.overflow = "hidden";
-=======
-const sound = new Audio("/home/elvik/Downloads/Womp Womp Womp sound effect.mp3"); 
-const MAX_ROWS = 30;
-const MAX_COLS = 20;
-const SHIP_WIDTH = 5;
-document.body.style.overflow = 'hidden'; 
->>>>>>> 3b515603bb959c419988034634e04e501469f798
 
 let score = 0;
 const state = {
@@ -23,7 +18,6 @@ const state = {
 
 let spawnProbability = 0;
 
-<<<<<<< HEAD
 const SHIP = [
   [" ", " ", "x", " ", " "],
   [" ", "x", "x", "x", " "],
@@ -31,54 +25,32 @@ const SHIP = [
   ["x", "x", "x", "x", "x"],
   [" ", "x", "x", "x", " "],
 ];
-=======
-const SHIP = [[" "," ","x"," "," "],
-              [" ","x","x","x"," "],
-              [" ","x","x","x"," "],
-              ["x","x","x","x","x"],
-              [" ","x","x","x"," "]]
-
->>>>>>> 3b515603bb959c419988034634e04e501469f798
 
 const gameArea = document.getElementById("game_area");
 
-
-function clear() { 
+function clear() {
   while (gameArea.firstChild) {
-    gameArea.firstChild.remove(); 
+    gameArea.firstChild.remove();
   }
 }
 
-
 function drawShip(shipPositionX) {
-<<<<<<< HEAD
   for (let i = 0; i < SHIP.length; i++) {
     const currentRow = gameArea.childNodes[MAX_ROWS - 1 - i];
     for (let j = 0; j < SHIP[0].length; j++) {
       if (SHIP[SHIP.length - i - 1][j] == "x")
         currentRow.childNodes[j + shipPositionX].classList.add("ship");
-=======
-  for(let i = 0; i < SHIP.length; i++){
-    const currentRow = gameArea.childNodes[MAX_ROWS - 1 - i];
-    for (let j = 0; j < SHIP[0].length; j++) {
-      if(SHIP[SHIP.length - i - 1][j] == "x") currentRow.childNodes[j + shipPositionX].classList.add("ship");;
->>>>>>> 3b515603bb959c419988034634e04e501469f798
     }
   }
 }
 
 function drawBullets(bulletPositions) {
-<<<<<<< HEAD
-=======
-
->>>>>>> 3b515603bb959c419988034634e04e501469f798
   for (let i = 0; i < bulletPositions.length; i++) {
-    const bulletPosition = bulletPositions[i];
+    const bulletPosition = bulletPositions[i]; // { row: ..., col: ... }
     const rowElement = gameArea.childNodes[bulletPosition.row];
     rowElement.childNodes[bulletPosition.col].classList.add("bullet");
   }
 }
-
 
 function draw() {
   clear();
@@ -117,11 +89,7 @@ function spawnTarget() {
 
 function handleSpawning() {
   spawnProbability = 5;
-<<<<<<< HEAD
   const randomNumber = Math.random() * 100;
-=======
-  const randomNumber = (Math.random() * 100);
->>>>>>> 3b515603bb959c419988034634e04e501469f798
 
   if (randomNumber < spawnProbability || state.targets.length == 0) {
     spawnTarget();
@@ -134,7 +102,6 @@ function handleCollisions() {
     for (let k = 0; k < state.targets.length; k++) {
       const targetPosition = state.targets[k];
 
-<<<<<<< HEAD
       if (
         bulletPosition.row == targetPosition.row &&
         bulletPosition.col == targetPosition.col
@@ -142,12 +109,6 @@ function handleCollisions() {
         removeFromList(state.bulletPositions, bulletPosition);
         removeFromList(state.targets, targetPosition);
         document.getElementById("score").innerText = `Score: ${++score}`;
-=======
-      if (bulletPosition.row == targetPosition.row && bulletPosition.col == targetPosition.col) {
-        removeFromList(state.bulletPositions, bulletPosition);
-        removeFromList(state.targets, targetPosition);
-        document.getElementById('score').innerText = `Score: ${++score}`;
->>>>>>> 3b515603bb959c419988034634e04e501469f798
       }
     }
   }
@@ -160,43 +121,27 @@ function removeFromList(list, item) {
   }
 }
 
-<<<<<<< HEAD
 function gameOver() {
   state.bulletPositions = [];
   state.targets = [];
   score = 0;
+  audioElement.play();
   document.getElementById("score").innerText = `Score: ${0}`;
-  sound.play();
-=======
-function gameOver(){
-  state.bulletPositions = [];
-  state.targets = [];
-  score = 0;
-  document.getElementById('score').innerText = `Score: ${0}`;
-  sound.play()
->>>>>>> 3b515603bb959c419988034634e04e501469f798
-  alert("Game Over");
+  document.getElementById("gameOver").style.display = "flex";
+  clearInterval(gameIntervalId);
   keysPressed = {};
-  sound.play();
 }
 
 function handleShipCollision() {
   for (const target of state.targets) {
     for (let i = 0; i < SHIP.length; i++) {
       for (let j = 0; j < SHIP[0].length; j++) {
-<<<<<<< HEAD
         if (
           SHIP[SHIP.length - i - 1][j] === "x" &&
           target.row === MAX_ROWS - SHIP.length + i &&
           target.col === state.shipPositionX + j
         ) {
           gameOver();
-=======
-        if (SHIP[SHIP.length - i - 1][j] === "x" &&
-            target.row === MAX_ROWS - SHIP.length + i &&
-            target.col === state.shipPositionX + j) {
-            gameOver();
->>>>>>> 3b515603bb959c419988034634e04e501469f798
         }
       }
     }
@@ -205,73 +150,39 @@ function handleShipCollision() {
 
 function drawTarget() {
   for (let i = 0; i < state.targets.length; i++) {
-<<<<<<< HEAD
-    const targetPosition = state.targets[i];
+    const targetPosition = state.targets[i]; // { row: ..., col: ... }
     const rowElement = gameArea.childNodes[targetPosition.row];
     rowElement.childNodes[targetPosition.col].classList.add("target");
   }
 }
 
-=======
-    const targetPosition = state.targets[i]; // { row: ..., col: ... }
-    const rowElement = gameArea.childNodes[targetPosition.row];
-    rowElement.childNodes[targetPosition.col].classList.add("target");
-  };
-}
-
-
-
->>>>>>> 3b515603bb959c419988034634e04e501469f798
 let keysPressed = {};
 
 document.addEventListener("keydown", function (event) {
   keysPressed[event.key] = true;
-<<<<<<< HEAD
 });
 
 document.addEventListener("keyup", function (event) {
   keysPressed[event.key] = false;
 });
 
-setInterval(function () {
-=======
-});
-
-document.addEventListener("keyup", function (event) {
-  keysPressed[event.key] = false;
-});
-
-setInterval(function () {
-
-
->>>>>>> 3b515603bb959c419988034634e04e501469f798
+const gameLoop = function () {
   let bulletsToRemove = 0;
   for (let i = 0; i < state.bulletPositions.length; i++) {
     const bulletPosition = state.bulletPositions[i];
     bulletPosition.row = bulletPosition.row - 1;
     if (bulletPosition.row === -1) bulletsToRemove++;
-<<<<<<< HEAD
   }
   handleCollisions();
 
   while (bulletsToRemove > 0) {
     state.bulletPositions.shift();
     bulletsToRemove--;
-=======
->>>>>>> 3b515603bb959c419988034634e04e501469f798
   }
-  handleCollisions();
 
-
-  while (bulletsToRemove > 0) {
-    state.bulletPositions.shift();
-    bulletsToRemove--;
-  }
-    
   for (let i = 0; i < state.targets.length; i++) {
     const target = state.targets[i];
     target.row = target.row + 1;
-<<<<<<< HEAD
     if (target.row === MAX_ROWS) gameOver();
   }
 
@@ -298,34 +209,14 @@ setInterval(function () {
   }
 
   draw();
-}, 100);
-=======
-    if (target.row === MAX_ROWS) gameOver();;
-  }
-  
-  handleSpawning();
-  handleCollisions();
-  handleShipCollision();
-  spawnProbability += 0.2;
-  
-  
-  if (keysPressed['ArrowRight'] && state.shipPositionX < MAX_COLS - SHIP_WIDTH) {
-    state.shipPositionX++;
-  }
-  if (keysPressed['ArrowLeft'] && state.shipPositionX > 0) {
-    state.shipPositionX--;
-  }
-  if (keysPressed[' ']) {
-    keysPressed[' '] = false;
-    state.bulletPositions.push({
-      row: MAX_ROWS - SHIP.length - 1,
-      col: state.shipPositionX + Math.floor(SHIP_WIDTH / 2)
-    });
-  }
+};
 
-  draw();
+let gameIntervalId = null;
 
+function start() {
+  gameIntervalId = setInterval(gameLoop, 100);
+  document.getElementById("score").innerText = `Score: ${++score}`;
+  document.removeEventListener("keyup", start);
+}
 
-}, 100);
-
->>>>>>> 3b515603bb959c419988034634e04e501469f798
+document.addEventListener("keyup", start);

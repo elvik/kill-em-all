@@ -1,50 +1,67 @@
 <!DOCTYPE html>
 <html>
-
-<head>
+  <head>
     <style>
-        .row {
-            background-color: rgb(30, 30, 57);
-            display: flex;
-            margin: 0 px;
-        }
+      .row {
+        background-color: rgb(30, 30, 57);
+        display: flex;
+        margin: 0 px;
+      }
 
-        .col {
-            background-color: rgb(27, 33, 67);
-            margin: 2px;
-            width: 2vh;
-            height: 2vh;
-        }
+      .col {
+        background-color: rgb(27, 33, 67);
+        margin: 2px;
+        width: 2vh;
+        height: 2vh;
+      }
 
-        .ship {
-            background-color: rgb(255, 255, 255) !important;
-        }
+      .ship {
+        background-color: rgb(255, 255, 255) !important;
+      }
 
-        .bullet {
-            background-color: rgb(255, 0, 0) !important;
-        }
+      .bullet {
+        background-color: rgb(255, 0, 0) !important;
+      }
 
-        .target {
-            background-color: rgb(111, 26, 26) !important;
-        }
-        body {
-            background-color: black;
-            margin: 0;display: flex;
-            justify-content: center;  /* Center horizontally /
+      .target {
+        background-color: rgb(111, 26, 26) !important;
+      }
+      body {
+        background-color: black;
+        margin: 0;
+        display: flex;
+        justify-content: center; /* Center horizontally /
             align-items: center;      / Center vertically */
-            height: 1000vh;
-        }
-        h1 {
-            color: white;
-        }
+        height: 1000vh;
+      }
+
+      h1 {
+        color: white;
+      }
+
+      #gameOver {
+        color: white;
+        font-size: 50px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgb(0, 0, 0, 0.8);
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <div>
-        <h1 id="score">Score: 0</h1>
-        <div id="game_area"></div></div>
+      <h1 id="score">Press any key to start</h1>
+      <div id="game_area"></div>
+    </div>
+    <audio id="audioElement" src="womp.mp3"></audio>
+    <div id="gameOver" style="display: none">💀 Game Over 💀</div>
     <script type="text/javascript" src="index.js"></script>
-</body>
-
+  </body>
 </html>
