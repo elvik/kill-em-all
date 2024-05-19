@@ -209,6 +209,3 @@ setInterval(function () {
 
 }, 100);
 
-
-
-}, 100);
